@@ -5,6 +5,6 @@ package astro.path;
  */
 public class App {
     public static void main(String[] args) {
-        System.out.println("A pimp named Slipback");
+        System.out.println("Hello World");
     }
 }
