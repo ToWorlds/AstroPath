@@ -1,0 +1,11 @@
+[ {
+  "SCPList" : [ {
+    "type" : "Cockpit"
+  }, {
+    "type" : "FuelTank"
+  }, {
+    "activated" : false,
+    "type" : "Thruster"
+  } ],
+  "name" : "Mike Hunterz"
+} ]
