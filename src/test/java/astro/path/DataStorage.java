@@ -8,7 +8,7 @@ import tools.jackson.databind.exc.InvalidDefinitionException;
 import tools.jackson.databind.exc.MismatchedInputException;
 
 import tools.jackson.core.type.TypeReference;
-import tools.jackson.core.JacksonException;
+//import tools.jackson.core.JacksonException;
 
 import java.io.InputStream;
 import java.io.FileInputStream;
@@ -19,16 +19,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import java.util.List;
+
+import javax.swing.JFileChooser;
+
 import java.util.ArrayList;
 
 
 public class DataStorage {
 	public static void main(String[] args) {
 		System.out.println("Hello There!");
+		File storageFile;
 		ObjectMapper mapper = new ObjectMapper();
+		JFileChooser fileChooser = new JFileChooser();
 		try {
 			// Declaring Filepath
-			File storageFile = new File("src/test/resources/Spacecraft.apos.json");
+			
+			// Using javax.swing.JFileChooser
+			int response = fileChooser.showOpenDialog(null); //select file to open
+			if (response == JFileChooser.APPROVE_OPTION) {
+				storageFile= new File(fileChooser.getSelectedFile().getAbsolutePath());
+			} else {
+				// Default: in case of not chosen
+				storageFile = new File("src/test/resources/Spacecraft.apos.json");
+			}
 			storageFile.createNewFile();
 			// Creating Sample data for test input
 			List<Spacecraft> mySCList = new ArrayList<Spacecraft>();
