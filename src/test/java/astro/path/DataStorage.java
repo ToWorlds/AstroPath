@@ -1,6 +1,7 @@
 package astro.path;
 
 import astro.path.objects.*;
+import astro.path.objects.Spacecraft;
 
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
