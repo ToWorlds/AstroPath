@@ -465,4 +465,3 @@ public class Main extends Application{
 		primaryStage.setHeight(h);
 	}
 }
-
