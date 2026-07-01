@@ -1,6 +1,7 @@
-package astro.path.objects;
+package astro.path.objects.misc;
 
 import astro.path.controller.TelemetryData;
+import astro.path.objects.Spacecraft;
 
 public class SurfaceLander extends Spacecraft {
     private String mobilitySystem;

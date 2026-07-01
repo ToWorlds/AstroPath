@@ -1,8 +1,12 @@
 package astro.path.objects;
 
 import astro.path.controller.TelemetryData;
+import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Spacecraft {
+	List<SCPart> SCPartList;
+	String name;
     protected String id;
     protected String type;
     protected String status;

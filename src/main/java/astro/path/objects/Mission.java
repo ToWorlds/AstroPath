@@ -1,28 +1,35 @@
 package astro.path.objects;
 
-public class Mission {
+import java.util.List;
 
+public class Mission {
+	
+	Session session;
+	List<Spacecraft> SCList;
     private String name;
-    private String phase;
+    private Stage stage;
     private String objective;
-    private String launchDate;
-    private String estDecommission;
+    private Time startTimestamp;
+    private Time targetTimestamp;
     private int progressStatus;
 
-    public Mission(String name, String phase, String objective,
-            String launchDate, String estDecommission, int progressStatus) {
+    public Mission(String name, Stage stage, String objective,
+            Time launchDate, Time targetTimeStamp, int progressStatus,
+            Session session, List<Spacecraft> SCList) {
         this.name = name;
-        this.phase = phase;
+        this.stage = stage;
         this.objective = objective;
-        this.launchDate = launchDate;
-        this.estDecommission = estDecommission;
+        this.startTimestamp = launchDate;
+        this.targetTimestamp = targetTimeStamp;
         this.progressStatus = progressStatus;
+        this.session = session;
+        this.SCList = SCList;
     }
 
     @Override
     public String toString() {
-        return "Mission [name=" + name + ", phase=" + phase + ", objective=" + objective
-                + ", launchDate=" + launchDate + ", estDecommission=" + estDecommission
+        return "Mission [name=" + name + ", phase=" + stage + ", objective=" + objective
+                + ", launchDate=" + startTimestamp + ", estDecommission=" + targetTimestamp
                 + ", progressStatus=" + progressStatus + "]";
     }
 
@@ -34,12 +41,12 @@ public class Mission {
         this.name = name;
     }
 
-    public String getPhase() {
-        return phase;
+    public Stage getStage() {
+        return stage;
     }
 
-    public void setPhase(String phase) {
-        this.phase = phase;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     public String getObjective() {
@@ -50,21 +57,14 @@ public class Mission {
         this.objective = objective;
     }
 
-    public String getLaunchDate() {
-        return launchDate;
+    public Time getLaunchDate() {
+        return startTimestamp;
     }
 
-    public void setLaunchDate(String launchDate) {
-        this.launchDate = launchDate;
+    public void setLaunchDate(Time launchDate) {
+        this.startTimestamp = launchDate;
     }
 
-    public String getEstDecommission() {
-        return estDecommission;
-    }
-
-    public void setEstDecommission(String estDecommission) {
-        this.estDecommission = estDecommission;
-    }
 
     public int getProgressStatus() {
         return progressStatus;
@@ -73,4 +73,36 @@ public class Mission {
     public void setProgressStatus(int progressStatus) {
         this.progressStatus = progressStatus;
     }
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public List<Spacecraft> getSCList() {
+		return SCList;
+	}
+
+	public void setSCList(List<Spacecraft> sCList) {
+		SCList = sCList;
+	}
+
+	public Time getStartTimestamp() {
+		return startTimestamp;
+	}
+
+	public void setStartTimestamp(Time startTimestamp) {
+		this.startTimestamp = startTimestamp;
+	}
+
+	public Time getTargetTimestamp() {
+		return targetTimestamp;
+	}
+
+	public void setTargetTimestamp(Time targetTimestamp) {
+		this.targetTimestamp = targetTimestamp;
+	}
 }
