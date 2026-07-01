@@ -68,7 +68,15 @@ public class Time {
 	}
 	public static void main(String[] args) {
 		Time time = new Time();
-		time.PrintTime();
+		time.StartTime();
+		try {
+			for(int i = 0; i <= 5; i++) {
+				time.UpdateTime();
+				time.PrintTime();
+				Thread.sleep(1000);
+			}
+		} catch (InterruptedException e) {};
+		
 		
 	}
 }
