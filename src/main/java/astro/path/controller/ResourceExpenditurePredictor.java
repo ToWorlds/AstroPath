@@ -1,4 +1,4 @@
-package astro.path;
+package astro.path.controller;
 
 public class ResourceExpenditurePredictor {
 

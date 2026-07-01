@@ -1,4 +1,6 @@
-package astro.path;
+package astro.path.objects;
+
+import astro.path.controller.TelemetryData;
 
 public class PlanetaryOrbiter extends Spacecraft {
     private String orbitParameters;

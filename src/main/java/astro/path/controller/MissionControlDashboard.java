@@ -1,4 +1,8 @@
-package astro.path;
+package astro.path.controller;
+
+import astro.path.objects.Mission;
+import astro.path.objects.MissionCoordinator;
+import astro.path.objects.Spacecraft;
 
 public class MissionControlDashboard {
 

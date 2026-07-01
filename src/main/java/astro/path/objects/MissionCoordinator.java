@@ -1,7 +1,9 @@
-package astro.path;
+package astro.path.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import astro.path.controller.DataPersistenceManager;
 
 public class MissionCoordinator {
 

@@ -1,4 +1,6 @@
-package astro.path;
+package astro.path.objects;
+
+import astro.path.controller.TelemetryData;
 
 public abstract class Spacecraft {
     protected String id;
