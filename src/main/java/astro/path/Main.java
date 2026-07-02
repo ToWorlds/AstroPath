@@ -1,5 +1,7 @@
 package astro.path;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -10,6 +12,9 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,6 +24,10 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+
+import model.SpaceCraft;
+import model.Mission;
+import model.Telemetry;
 
 public class Main extends Application{
 	
@@ -72,6 +81,12 @@ public class Main extends Application{
 	
 	public void start(Stage primaryStage) throws Exception{
 		
+		// Fake Data for ui showcase purposes
+		
+		SpaceCraft s1 = new SpaceCraft("Lotus-x", "Planetary Orbiter", "Active");
+		Mission m1 = new Mission("Operation Alpha","Stage 1", "Arrive", "08/01/2026", "08/01/2027");
+		s1.setMission(m1);
+		
 		//Stage
 		
 		this.primaryStage = primaryStage;
@@ -104,10 +119,24 @@ public class Main extends Application{
 		surfaceTable.setMaxWidth(400);
 		surfaceTable.setMaxHeight(300);
 		
-		TableView<?> orbiterTable = new TableView();
-		orbiterTable.setPlaceholder(new Label("No Planetary Orbiter Data yet..."));
+		TableView<SpaceCraft> orbiterTable = new TableView();
 		orbiterTable.setMaxWidth(400);
 		orbiterTable.setMaxHeight(300);
+		
+		TableColumn<SpaceCraft, String> nameCol = new TableColumn<>("Name");
+		TableColumn<SpaceCraft, String> missionCol = new TableColumn<>("Mission");
+		TableColumn<SpaceCraft, String> statusCol = new TableColumn<>("Status");
+		
+		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		missionCol.setCellValueFactory(new PropertyValueFactory<>("missionName"));
+		statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+		
+		orbiterTable.getColumns().addAll(nameCol, missionCol, statusCol);
+		
+		ObservableList <SpaceCraft> data = FXCollections.observableArrayList();
+		data.add(s1);
+		orbiterTable.setItems(data);
+		
 		
 		TableView<?> probeTable = new TableView();
 		probeTable.setPlaceholder(new Label("No Deep-Space Probe Data yet..."));
@@ -139,7 +168,7 @@ public class Main extends Application{
 		eventLogTable.setMaxWidth(800);
 		eventLogTable.setMaxHeight(800);
 		
-		//Layouts(Boxes)
+		// Layouts/Boxes
 		
 		VBox layoutStart = new VBox(20);
 		layoutStart.getChildren().addAll(labelStart ,button);
@@ -195,7 +224,6 @@ public class Main extends Application{
 				"-fx-background-image: url('/7NvodtH-1080p-wallpaper-space.jpg');"
 				+ "-fx-background-size: cover;"
 				);
-
 		
 		VBox surfaceImage = new VBox(surfaceLanderIcon, surfaceLabel);
 		surfaceImage.setAlignment(Pos.CENTER_LEFT);
@@ -280,11 +308,12 @@ public class Main extends Application{
 		
 		root = new BorderPane();
 
-		
-		//Scenes
+		// Initial Scene 
 		
 		startUp = new Scene(layoutStart, 600, 400);
 		mainScene = new Scene(root, 600, 400);
+		
+		// Navbar function for each layout
 		
 		layoutDash.setTop(createNavBar());
 		layoutFleet.setTop(createNavBar());
@@ -405,7 +434,7 @@ public class Main extends Application{
 		
 	}
 	
-	//Function to create Navigation Bar for each Scene
+	//Function to create Navigation Bar for each layout
 	
 	private HBox createNavBar() {
 		
@@ -445,7 +474,8 @@ public class Main extends Application{
 				"-fx-background-color: rgba(58, 110, 165, 0.6);"
 				);
 		
-		//Events
+		//Button events
+		
 		homeButton.setOnAction(e -> setView(layoutDash, 1200, 800));
 		fleetButton.setOnAction(e -> setView(layoutFleet, 1200, 800));
 		telemetryButton.setOnAction(e -> setView(layoutTelemetry, 1200, 800));
