@@ -3,6 +3,7 @@ package astro.path.controller;
 import astro.path.objects.Mission;
 import astro.path.objects.MissionCoordinator;
 import astro.path.objects.Spacecraft;
+import astro.path.objects.Stage;
 
 public class MissionControlDashboard {
 
@@ -31,7 +32,7 @@ public class MissionControlDashboard {
     public void logEventDisplay() {
         System.out.println("=== Event Log ===");
         for (Mission m : coordinator.getCurrentMissions()) {
-            System.out.println(m.getName() + " | phase: " + m.getPhase()
+            System.out.println(m.getName() + " | phase: " + m.getStage()
                     + " | progress: " + m.getProgressStatus() + "%");
         }
     }
