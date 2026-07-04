@@ -1,6 +1,6 @@
 package astro.path.objects;
 
-public class SCPSolarPanel extends SCPart {
+public class SCPSolarPanel extends SCFart {
 	boolean extended;
 	double engeryOutput;
 	

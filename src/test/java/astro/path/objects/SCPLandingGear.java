@@ -1,6 +1,6 @@
 package astro.path.objects;
 
-public class SCPLandingGear extends SCPart{
+public class SCPLandingGear extends SCFart{
 	boolean retracted;
 	
 	public SCPLandingGear() {

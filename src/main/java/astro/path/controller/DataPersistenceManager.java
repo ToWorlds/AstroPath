@@ -16,6 +16,7 @@ public class DataPersistenceManager {
         this.filePath = filePath;
     }
 
+/*
     public void saveFleet(List<Spacecraft> fleet) {
         StringBuilder json = new StringBuilder();
         json.append("[\n");
@@ -48,6 +49,7 @@ public class DataPersistenceManager {
             System.out.println("Error saving fleet data: " + e.getMessage());
         }
     }
+*/
 
     public String loadFleet() {
         try {

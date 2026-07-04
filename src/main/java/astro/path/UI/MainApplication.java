@@ -1,4 +1,5 @@
 package astro.path.UI;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +20,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+
+import astro.path.objects.*;
+import astro.path.controller.*;
 
 public class MainApplication extends Application{
 	
@@ -67,6 +71,7 @@ public class MainApplication extends Application{
 	Button backButton3 = new Button("BACK");
 
 	public static void main(String [] args) {
+		DataController dc = new DataController();
 		launch(args);
 	}
 	

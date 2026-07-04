@@ -5,8 +5,16 @@ import java.util.ArrayList;
 import java.time.Duration;
 
 public class Session {
-	List<Mission> missionList;
-	Time currentTime;
+	public List<Mission> missionList;
+	public Time currentTime;
+	public String name;
+	public String id;
 	
+	public Session(){
+		this.missionList = new ArrayList<Mission>();
+		this.currentTime = new Time();
+		this.id = "0";
+		this.name = "";
+	}
 
 }

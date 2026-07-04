@@ -1,6 +1,6 @@
 package astro.path.objects;
 
-public class SCPart {
+public class SCFart {
 	String type;
 
 	public String getType() {

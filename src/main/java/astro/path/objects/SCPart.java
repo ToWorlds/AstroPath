@@ -1,11 +1,12 @@
 package astro.path.objects;
 
+
 public abstract class SCPart {
-	enum Status {OK, WARNING, CRITICAL};
-	Status status;
+	public String SCID;
+	public enum Status {OK, WARNING, CRITICAL};
+	public Status status;
 	
 	public Status getStatus() {
 		return this.status;
 	}
-
 }

@@ -1,28 +1,44 @@
 package astro.path.objects;
 
-import astro.path.controller.TelemetryData;
 import java.util.List;
+
+import astro.path.objects.SCPart.Status;
+
 import java.util.ArrayList;
 
-public abstract class Spacecraft {
-	List<SCPart> SCPartList;
-	String name;
-    protected String id;
-    protected String type;
-    protected String status;
-    protected TelemetryData telemetryData;
-
-    public Spacecraft(String id, String type, String status, TelemetryData telemetryData) {
-        this.id = id;
+public class Spacecraft {
+	public String missionID;
+	public String name;
+	public String id;
+	public String type;
+	public String status;
+	public List<SCPart> SCPartList;
+    
+    public Spacecraft(String missionID) {
+    	this.missionID = missionID;
+    	this.name = "NONE";
+    	this.id = "Spacecraft";
+    	this.type = "NONE";
+    	this.status = "NONE";
+    	this.SCPartList = new ArrayList<SCPart>();
+    }
+    
+    public Spacecraft(String name, String type, String status) {
+        this.name = name;
         this.type = type;
         this.status = status;
-        this.telemetryData = telemetryData;
+        this.SCPartList = new ArrayList<SCPart>();
     }
 
+    public void addSCPart(SCPart scp) {
+    	this.SCPartList.add(scp);
+    }
+    
+ /*   
     public TelemetryData getTelemetry() {
         return telemetryData;
     }
-
+List
     public String performSelfDiagnostic() {
         if (telemetryData.getFuelLevel() < 10) {
             return id + ": Warning - Low fuel!";
@@ -34,7 +50,11 @@ public abstract class Spacecraft {
 
         return id + ": All systems normal.";
     }
-
+*/
+    public String getName() {
+    	return name;
+    }
+    
     public String getId() {
         return id;
     }
@@ -42,7 +62,13 @@ public abstract class Spacecraft {
     public String getType() {
         return type;
     }
+    
+    public List<SCPart> getSCPartList() {
+    	return SCPartList;
+    }
 
+    
+    
     public String getStatus() {
         return status;
     }
@@ -51,10 +77,12 @@ public abstract class Spacecraft {
         this.status = status;
     }
 
-    public abstract void showSpecialFunction();
+    public void showSpecialFunction() {
+    	
+    };
 
     
     public String toString() {
-        return id + " | " + type + " | Status: " + status + " | " + telemetryData;
+        return id + " | " + type + " | Status: " + status + " | " /*+ telemetryData*/;
     }
 }

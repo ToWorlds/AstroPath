@@ -1,6 +1,6 @@
 package astro.path.objects;
 
-public class SCPThruster extends SCPart{
+public class SCPThruster extends SCFart{
 	boolean activated;
 	 
 	public SCPThruster() {

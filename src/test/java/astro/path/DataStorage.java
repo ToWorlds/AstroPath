@@ -1,7 +1,7 @@
 package astro.path;
 
 import astro.path.objects.*;
-import astro.path.objects.Spacecraft;
+import astro.path.objects.SpaceShart;
 
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
@@ -45,8 +45,8 @@ public class DataStorage {
 			}
 			storageFile.createNewFile();
 			// Creating Sample data for test input
-			List<Spacecraft> mySCList = new ArrayList<Spacecraft>();
-			Spacecraft mySC = new Spacecraft("Mike Hunterz");
+			List<SpaceShart> mySCList = new ArrayList<SpaceShart>();
+			SpaceShart mySC = new SpaceShart("Mike Hunterz");
 			mySC.addSCPart(new SCPCockpit());
 			mySC.addSCPart(new SCPFuelTank());
 			mySC.addSCPart(new SCPThruster());
@@ -64,11 +64,11 @@ public class DataStorage {
 			// Input Stream init
 			InputStream inputStream = new FileInputStream(storageFile);
 			// Creating Mapping Reference for proper input
-			TypeReference<List<Spacecraft>> typeReference = new TypeReference<List<Spacecraft>>() {};
+			TypeReference<List<SpaceShart>> typeReference = new TypeReference<List<SpaceShart>>() {};
 			// Creating integratable Dataset 
-			List<Spacecraft> SCList = mapper.readValue(inputStream, typeReference);
+			List<SpaceShart> SCList = mapper.readValue(inputStream, typeReference);
 			// Basic Object handling
-			for (Spacecraft SC : SCList) {
+			for (SpaceShart SC : SCList) {
 				System.out.println("Spacecraft '" + SC.getName() +
 						"' has " + SC.getSCPList().size() + " Parts");
 			}

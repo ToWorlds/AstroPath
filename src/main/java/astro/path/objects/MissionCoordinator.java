@@ -25,21 +25,22 @@ public class MissionCoordinator {
         currentMissions.add(mission);
     }
 
+    /*
     public void monitorHealth() {
         for (Spacecraft s : managedFleet) {
             System.out.println(s.performSelfDiagnostic());
         }
     }
-
+*/
     public void executeManeuver(Spacecraft spacecraft, String maneuver) {
         spacecraft.setStatus("Executing maneuver: " + maneuver);
         System.out.println(spacecraft.getId() + " performs maneuver: " + maneuver);
     }
-
+/*
     public void persistData() {
         persistenceManager.saveFleet(managedFleet);
     }
-
+*/
     public List<Spacecraft> getManagedFleet() {
         return managedFleet;
     }

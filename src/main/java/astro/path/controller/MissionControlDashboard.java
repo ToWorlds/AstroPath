@@ -1,12 +1,11 @@
 package astro.path.controller;
 
-import astro.path.objects.Mission;
-import astro.path.objects.MissionCoordinator;
-import astro.path.objects.Spacecraft;
-import astro.path.objects.Stage;
+//import astro.path.objects.MissionCoordinator;
+//import astro.path.objects.Spacecraft;
+//import astro.path.objects.MissionStage;
 
 public class MissionControlDashboard {
-
+/*
     private String viewState;
     private MissionCoordinator coordinator;
 
@@ -15,6 +14,7 @@ public class MissionControlDashboard {
         this.viewState = "Telemetry";
     }
 
+
     public void displayTelemetry() {
         System.out.println("=== Telemetry View ===");
         for (Spacecraft s : coordinator.getManagedFleet()) {
@@ -22,6 +22,7 @@ public class MissionControlDashboard {
         }
     }
 
+    
     public void renderTrajectoryViz() {
         System.out.println("=== Trajectory Visualization ===");
         for (Spacecraft s : coordinator.getManagedFleet()) {
@@ -44,4 +45,5 @@ public class MissionControlDashboard {
     public void setViewState(String viewState) {
         this.viewState = viewState;
     }
+    */
 }

@@ -1,0 +1,74 @@
+{
+  "currentTime" : {
+    "displayDays" : 0,
+    "displayHours" : 0,
+    "displayMinutes" : 0,
+    "displaySeconds" : 0,
+    "seconds" : 0,
+    "totalDays" : 0,
+    "totalHours" : 0,
+    "totalMinutes" : 0,
+    "totalSeconds" : 0,
+    "totalYears" : 0
+  },
+  "id" : "0",
+  "missionList" : [ {
+    "MissionStageList" : [ {
+      "activatedParts" : [ {
+        "SCID" : "Spacecraft",
+        "consumptionRate" : 10.0,
+        "currentCapacity" : 100.0,
+        "maxCapacity" : 100.0,
+        "status" : "OK",
+        "thrust" : 0.0,
+        "velocity" : 0.0
+      } ],
+      "missionID" : "0",
+      "name" : "Sputnik -> Kaputnik",
+      "startTime" : {
+        "displayDays" : 0,
+        "displayHours" : 0,
+        "displayMinutes" : 0,
+        "displaySeconds" : 0,
+        "seconds" : 0,
+        "totalDays" : 0,
+        "totalHours" : 0,
+        "totalMinutes" : 0,
+        "totalSeconds" : 0,
+        "totalYears" : 0
+      },
+      "targetTime" : {
+        "displayDays" : 0,
+        "displayHours" : 0,
+        "displayMinutes" : 0,
+        "displaySeconds" : 0,
+        "seconds" : 0,
+        "totalDays" : 0,
+        "totalHours" : 0,
+        "totalMinutes" : 0,
+        "totalSeconds" : 0,
+        "totalYears" : 0
+      }
+    } ],
+    "SCList" : [ {
+      "SCPartList" : [ {
+        "SCID" : "Spacecraft",
+        "consumptionRate" : 10.0,
+        "currentCapacity" : 100.0,
+        "maxCapacity" : 100.0,
+        "status" : "OK",
+        "thrust" : 0.0,
+        "velocity" : 0.0
+      } ],
+      "id" : "1337",
+      "missionID" : "0",
+      "name" : "Sputnik",
+      "status" : "I'm not Hungry",
+      "type" : "UFO"
+    } ],
+    "id" : "0",
+    "name" : "Starting Sputnik",
+    "sessionID" : "0"
+  } ],
+  "name" : "Farting Session"
+}

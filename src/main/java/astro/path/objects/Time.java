@@ -2,7 +2,7 @@ package astro.path.objects;
 
 public class Time {
 
-	long seconds;
+	public long seconds;
 	
 	public Time() {
 		this.seconds = 0;
