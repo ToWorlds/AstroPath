@@ -19,6 +19,7 @@
         "consumptionRate" : 0.0,
         "currentCapacity" : 0.0,
         "maxCapacity" : 0.0,
+        "name" : null,
         "status" : "OK",
         "thrust" : 0.0,
         "velocity" : 0.0
@@ -55,6 +56,7 @@
         "consumptionRate" : 0.0,
         "currentCapacity" : 0.0,
         "maxCapacity" : 0.0,
+        "name" : null,
         "status" : "OK",
         "thrust" : 0.0,
         "velocity" : 0.0
@@ -63,6 +65,7 @@
         "consumptionRate" : 10.0,
         "currentCapacity" : 100.0,
         "maxCapacity" : 100.0,
+        "name" : null,
         "status" : "OK",
         "thrust" : 0.0,
         "velocity" : 0.0
@@ -100,6 +103,7 @@
         "consumptionRate" : 10.0,
         "currentCapacity" : 100.0,
         "maxCapacity" : 100.0,
+        "name" : null,
         "status" : "OK",
         "thrust" : 0.0,
         "velocity" : 0.0
