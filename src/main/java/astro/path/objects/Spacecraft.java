@@ -14,6 +14,14 @@ public class Spacecraft {
 	public String status;
 	public List<SCPart> SCPartList;
     
+	public Spacecraft() {
+		this.name = "NONE";
+    	this.id = "Spacecraft";
+    	this.type = "NONE";
+    	this.status = "NONE";
+    	this.SCPartList = new ArrayList<SCPart>();
+	}
+	
     public Spacecraft(String missionID) {
     	this.missionID = missionID;
     	this.name = "NONE";

@@ -33,15 +33,28 @@ public class Mission {
         this.id = id;
     }
 */
-    public Mission(String sessionID) {
-    	this.sessionID = sessionID;
-    	this.SCList = new ArrayList<Spacecraft>();
+	public Mission() {
+		this.SCList = new ArrayList<Spacecraft>();
     	this.MissionStageList = new ArrayList<MissionStage>();  
-    	this.name = "UNNAMED";
+    	this.name = "WITHOUT SessionID";
     	this.id = "0";
     	
     	MissionStage startMS = new MissionStage(this.id);
     	startMS.name = "Nothing yet";
+    	this.MissionStageList.add(startMS);
+	}
+	
+    public Mission(String sessionID) {
+    	this.sessionID = sessionID;
+    	this.SCList = new ArrayList<Spacecraft>();
+    	this.MissionStageList = new ArrayList<MissionStage>();  
+    	this.name = "WITH SessionID";
+    	this.id = "0";
+    	
+    	MissionStage startMS = new MissionStage(this.id);
+    	startMS.name = "Nothing yet";
+    	this.MissionStageList.add(startMS);
+    	
     	
     }
     

@@ -15,6 +15,50 @@
   "missionList" : [ {
     "MissionStageList" : [ {
       "activatedParts" : [ {
+        "SCID" : "0",
+        "consumptionRate" : 0.0,
+        "currentCapacity" : 0.0,
+        "maxCapacity" : 0.0,
+        "status" : "OK",
+        "thrust" : 0.0,
+        "velocity" : 0.0
+      } ],
+      "missionID" : "0",
+      "name" : "Nothing yet",
+      "startTime" : {
+        "displayDays" : 0,
+        "displayHours" : 0,
+        "displayMinutes" : 0,
+        "displaySeconds" : 0,
+        "seconds" : 0,
+        "totalDays" : 0,
+        "totalHours" : 0,
+        "totalMinutes" : 0,
+        "totalSeconds" : 0,
+        "totalYears" : 0
+      },
+      "targetTime" : {
+        "displayDays" : 0,
+        "displayHours" : 0,
+        "displayMinutes" : 0,
+        "displaySeconds" : 0,
+        "seconds" : 0,
+        "totalDays" : 0,
+        "totalHours" : 0,
+        "totalMinutes" : 0,
+        "totalSeconds" : 0,
+        "totalYears" : 0
+      }
+    }, {
+      "activatedParts" : [ {
+        "SCID" : "0",
+        "consumptionRate" : 0.0,
+        "currentCapacity" : 0.0,
+        "maxCapacity" : 0.0,
+        "status" : "OK",
+        "thrust" : 0.0,
+        "velocity" : 0.0
+      }, {
         "SCID" : "Spacecraft",
         "consumptionRate" : 10.0,
         "currentCapacity" : 100.0,

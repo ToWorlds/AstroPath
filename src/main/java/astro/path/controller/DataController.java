@@ -103,6 +103,10 @@ public class DataController {
 			System.out.println("Session: '" + session.name +
 					"' has " + session.missionList.size()+ " Mission(s)");
 			inputStream.close();
+			
+			for(Mission mission : session.missionList) {
+				System.out.println("Mission is called " + mission.name);
+			}
 		} catch (FileNotFoundException e) {
 			//System.out.println("FileNotFoundException");
 			e.printStackTrace();

@@ -1,8 +1,6 @@
 package astro.path.objects;
 
 import java.util.List;
-
-
 import java.util.ArrayList;
 
 public class MissionStage {
@@ -18,11 +16,15 @@ public class MissionStage {
 		this.activatedParts = new ArrayList<SCPart>();
 		this.startTime = new Time();
 		this.targetTime = new Time();
+		Thruster sampleThruster = new Thruster(missionID);
+		this.activatedParts.add(sampleThruster);
 	}
 	
 	public MissionStage() {
 		this.name = "UNNAMED";
 		this.activatedParts = new ArrayList<SCPart>();
+		Thruster sampleThruster = new Thruster(missionID);
+		this.activatedParts.add(sampleThruster);
 	}
 	
 	
