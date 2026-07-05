@@ -1,6 +1,7 @@
 package astro.path.objects;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import astro.path.objects.SCPart.Status;
 
@@ -16,21 +17,21 @@ public class Spacecraft {
     
 	public Spacecraft() {
 		this.name = "NONE";
-    	this.id = "Spacecraft";
     	this.type = "NONE";
     	this.status = "NONE";
     	this.SCPartList = new ArrayList<SCPart>();
 	}
-	
+
+/*
     public Spacecraft(String missionID) {
     	this.missionID = missionID;
     	this.name = "NONE";
-    	this.id = "Spacecraft";
     	this.type = "NONE";
     	this.status = "NONE";
     	this.SCPartList = new ArrayList<SCPart>();
     }
-    
+*/
+
     public Spacecraft(String name, String type, String status) {
         this.name = name;
         this.type = type;
@@ -75,8 +76,6 @@ List
     	return SCPartList;
     }
 
-    
-    
     public String getStatus() {
         return status;
     }

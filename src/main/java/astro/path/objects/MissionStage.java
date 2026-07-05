@@ -20,6 +20,7 @@ public class MissionStage {
 		this.activatedParts.add(sampleThruster);
 	}
 	
+	
 	public MissionStage() {
 		this.name = "UNNAMED";
 		this.activatedParts = new ArrayList<SCPart>();
