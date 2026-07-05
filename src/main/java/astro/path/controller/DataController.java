@@ -78,7 +78,7 @@ public class DataController {
 		
 		myMissionStage.name = "Sputnik -> Kaputnik";
 		myMissionStage.activatedParts.add(mySpacecraft.SCPartList.get(0));
-		myMissionStage.StartStage(mySession.currentTime);
+		//myMissionStage.StartStage(mySession.currentTime);
 		
 		myMission.name = "Starting Sputnik";
 		myMission.SCList.add(mySpacecraft);
