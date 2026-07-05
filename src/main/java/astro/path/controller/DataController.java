@@ -247,7 +247,7 @@ public class DataController {
 		return null;
 	}
 	
-	
+/*	
 	public void SampleExecution() {
 		File storageFile;
 		ObjectMapper mapper = new ObjectMapper();
@@ -302,6 +302,7 @@ public class DataController {
 			mySC.addSCPart(new Sensor());
 			mySCList.add(mySC);
 	*/
+	/*
 			System.out.println("Breakpoint");
 			
 			// Output Stream Init
@@ -345,5 +346,6 @@ public class DataController {
 			e.printStackTrace();
 		}
 	}
+	*/
 
 }
