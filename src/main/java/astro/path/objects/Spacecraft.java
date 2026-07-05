@@ -3,10 +3,6 @@ package astro.path.objects;
 import java.util.List;
 import java.util.ArrayList;
 
-import astro.path.objects.SCPart.Status;
-
-import java.util.ArrayList;
-
 public class Spacecraft {
 	public String missionID;
 	public String name;
@@ -20,6 +16,7 @@ public class Spacecraft {
     	this.type = "NONE";
     	this.status = "NONE";
     	this.SCPartList = new ArrayList<SCPart>();
+    	
 	}
 
 /*
@@ -53,9 +50,15 @@ List
             return id + ": Warning - Low fuel!";
         }
 
-        if (telemetryData.getSignalStrength() < 20) {
-            return id + ": Warning - Weak signal!";
-        }
+		// alle Teile durchgehen und nach kritischen/offline Zuständen suchen
+		for (SCPart part : SCPartList) {
+			if (part.getStatus() == SCPart.Status.CRITICAL) {
+				return id + ": Warning - a part is in CRITICAL condition!";
+			}
+			if (part.getStatus() == SCPart.Status.OFFLINE) {
+				return id + ": Warning - a part is OFFLINE!";
+			}
+		}
 
         return id + ": All systems normal.";
     }
@@ -67,6 +70,16 @@ List
     public String getId() {
         return id;
     }
+ // Überblick über den Zustand aller Teile
+ 	public String getPartsReport() {
+ 		StringBuilder report = new StringBuilder();
+ 		report.append(id).append(" parts status:\n");
+ 		for (SCPart part : SCPartList) {
+ 			report.append("  - ").append(part.getClass().getSimpleName())
+ 					.append(": ").append(part.getStatus()).append("\n");
+ 		}
+		return report.toString();
+ 	}
 
     public String getType() {
         return type;
@@ -76,13 +89,25 @@ List
     	return SCPartList;
     }
 
-    public String getStatus() {
-        return status;
-    }
+	public TelemetryData getTelemetry() {
+		return telemetryData;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public String getId() {
+		return id;
+	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
     public void showSpecialFunction() {
     	

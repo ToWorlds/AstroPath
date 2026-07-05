@@ -3,7 +3,7 @@ package astro.path.objects;
 
 public class SCPart {
 	public String SCID;
-	public enum Status {OK, WARNING, CRITICAL};
+	public enum Status {OK, WARNING, CRITICAL, EMPTY, OFFLINE};
 	public Status status;
 	public String name;
 	
