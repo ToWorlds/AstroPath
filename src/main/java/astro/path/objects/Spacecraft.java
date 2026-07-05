@@ -81,6 +81,7 @@ List
 		return report.toString();
  	}
 
+ 
     public String getType() {
         return type;
     }
@@ -88,19 +89,11 @@ List
     public List<SCPart> getSCPartList() {
     	return SCPartList;
     }
-
+/*
 	public TelemetryData getTelemetry() {
 		return telemetryData;
 	}
-
-	public String getId() {
-		return id;
-	}
-	
-	public String getType() {
-		return type;
-	}
-
+*/
 	public String getStatus() {
 		return status;
 	}

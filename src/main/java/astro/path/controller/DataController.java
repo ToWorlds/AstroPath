@@ -54,10 +54,10 @@ public class DataController {
 	
 	public Session createSampleData() {
 		Session mySession = new Session();
-		Mission myMission = new Mission(mySession.id);
-		MissionStage myMissionStage = new MissionStage(myMission.id);
-		Spacecraft mySpacecraft = new Spacecraft(myMission.id);
-		Thruster myThruster = new Thruster(mySpacecraft.id);
+		Mission myMission = new Mission();
+		MissionStage myMissionStage = new MissionStage();
+		Spacecraft mySpacecraft = new Spacecraft();
+		Thruster myThruster = new Thruster();
 		
 		
 		myThruster.consumptionRate = 10.0;

@@ -16,7 +16,7 @@ public class MissionStage {
 		this.activatedParts = new ArrayList<SCPart>();
 		this.startTime = new Time();
 		this.targetTime = new Time();
-		Thruster sampleThruster = new Thruster(missionID);
+		Thruster sampleThruster = new Thruster();
 		this.activatedParts.add(sampleThruster);
 	}
 	
@@ -24,8 +24,10 @@ public class MissionStage {
 	public MissionStage() {
 		this.name = "UNNAMED";
 		this.activatedParts = new ArrayList<SCPart>();
-		Thruster sampleThruster = new Thruster(missionID);
+		Thruster sampleThruster = new Thruster();
 		this.activatedParts.add(sampleThruster);
+		this.startTime = new Time();
+		this.targetTime = new Time();
 	}
 	
 	

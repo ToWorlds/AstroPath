@@ -67,10 +67,12 @@
     	<scope>compile</scope>
 	</dependency>
 	
+	<!-- Source: https://mvnrepository.com/artifact/eu.hansolo/medusa -->
 	<dependency>
-    	<groupId>eu.hansolo</groupId>
-    	<artifactId>medusa</artifactId>
-    	<version>21.0.9</version>
+	    <groupId>eu.hansolo</groupId>
+	    <artifactId>medusa</artifactId>
+	    <version>17.1.7</version>
+	    <scope>compile</scope>
 	</dependency>
   </dependencies>
   

@@ -22,8 +22,8 @@ public class Main {
 		} else {
 			System.out.println("Mission not found.");
 		}
-
-		// MainApplication.main(args);
+		
+		MainApplication.main(args);
 	}
 	
 	public Mission findMissionWithName( Session mySession, String name) {

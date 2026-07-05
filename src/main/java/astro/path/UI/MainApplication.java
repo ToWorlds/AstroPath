@@ -47,22 +47,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
-
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.*;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 
 import astro.path.objects.*;
 import astro.path.controller.*;
