@@ -5,15 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-//import astro.path.controller.TelemetryData;
 import astro.path.objects.Mission;
 import astro.path.objects.MissionCoordinator;
 import astro.path.objects.MissionStage;
 import astro.path.objects.Spacecraft;
 import astro.path.objects.Time;
-//import astro.path.objects.misc.DeepSpaceProbe;
-//import astro.path.objects.misc.PlanetaryOrbiter;
-//import astro.path.objects.misc.SurfaceLander;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -50,6 +46,10 @@ import javafx.geometry.Pos;
 
 import eu.hansolo.medusa.Gauge;
 import eu.hansolo.medusa.GaugeBuilder;
+import astro.path.objects.SCPart;
+import astro.path.objects.Thruster;
+import astro.path.objects.SolarPanel;
+import astro.path.objects.Sensor;
 
 import astro.path.objects.*;
 import astro.path.controller.*;
@@ -104,46 +104,107 @@ public class MainApplication extends Application{
 	}
 	
 	public void start(Stage primaryStage) throws Exception{
-		/*
-		TelemetryData tel1 = new TelemetryData(80, 22, 95);
-		TelemetryData tel2 = new TelemetryData(40, 20, 91);
-		TelemetryData tel3 = new TelemetryData(15, 23, 97);
-		*/
 		
-		/*
-		ObservableList<TelemetryData> telemetry = FXCollections.observableArrayList();
-		telemetry.addAll(tel1, tel2, tel3);
-		*/
 		
-		/*
-		SurfaceLander s1 = new SurfaceLander("Apollo-N", "2", "🟢", tel1, "mobSys", "landingGearStat"); 
-		PlanetaryOrbiter p1 = new PlanetaryOrbiter("Bravo-B", "3", "🟡", tel2, "parameters", "payload"); 
-		DeepSpaceProbe d1 = new DeepSpaceProbe("Celeste-C", "4", "🔴", tel3, "antenna", "protocol"); 
-		*/
+		Spacecraft s1 = new Spacecraft("Apollo-N", "Surface Lander", "🟢"); 
+		Spacecraft p1 = new Spacecraft("Bravo-B", "Planetary Orbiter", "🟡"); 
+		Spacecraft d1 = new Spacecraft("Celeste-C", "Deep-Space Probe", "🔴"); 
 		
-		/*
-		ObservableList<Spacecraft> fleet = FXCollections.observableArrayList(); 
-		fleet.addAll(s1, p1, d1);  
-		*/
+		s1.id = "1";
+		p1.id = "2";
+		d1.id = "3";
+		
+		//Spacecraft Parts
+		// Apollo-N
+		Thruster s1Thruster = new Thruster(10, 500, 0, 100);   
+		SolarPanel s1Panel = new SolarPanel(5, 100);
+		s1Panel.setCurrentCapacity(70);                          
+		Sensor s1Sensor = new Sensor(100, 10, 5, 2);
+		s1Sensor.setCurrentCapacityUsed(40);                     
+		s1.addSCPart(s1Thruster);
+		s1.addSCPart(s1Panel);
+		s1.addSCPart(s1Sensor);
+
+		// Bravo-B
+		Thruster p1Thruster = new Thruster(8, 400, 0, 100);
+		p1Thruster.setCurrentCapacity(55);                       
+		SolarPanel p1Panel = new SolarPanel(6, 100);
+		p1Panel.setCurrentCapacity(85);                          
+		p1.addSCPart(p1Thruster);
+		p1.addSCPart(p1Panel);
+
+		// Celeste-C
+		Sensor d1Sensor = new Sensor(200, 15, 5, 3);
+		d1Sensor.setCurrentCapacityUsed(120);                   
+		Thruster d1Thruster = new Thruster(12, 600, 0, 100);
+		d1Thruster.setCurrentCapacity(30);                       
+		d1.addSCPart(d1Thruster);
+		d1.addSCPart(d1Sensor);
+		
+		// Mission 1
+		Mission m1 = new Mission();
+		m1.setName("Moon Landing");
+		m1.getSCList().add(s1);
+		m1.MissionStageList.get(0).name = "Initialization";
+		m1.MissionStageList.get(0).startTime.setTime(0);
+		m1.MissionStageList.get(0).targetTime.setTime(3600);
+
+		// Mission 2
+		Mission m2 = new Mission();
+		m2.setName("Orbital run v1.0");
+		m2.getSCList().add(p1);
+		m2.MissionStageList.get(0).name = "Approach";
+		m2.MissionStageList.get(0).startTime.setTime(0);
+		m2.MissionStageList.get(0).targetTime.setTime(7200);
+		
+		// Mission 3
+		Mission m3 = new Mission();
+		m2.setName("Deep Space Dive");
+		m2.getSCList().add(d1);
+		m2.MissionStageList.get(0).name = "Dive";
+		m2.MissionStageList.get(0).startTime.setTime(0);
+		m2.MissionStageList.get(0).targetTime.setTime(8712);
+
 		MissionCoordinator coordinator = new MissionCoordinator(); 
 		
-		/*
+		
 		coordinator.addSpacecraft(s1); 
 		coordinator.addSpacecraft(p1); 
 		coordinator.addSpacecraft(d1); 
-		*/
+		coordinator.addMission(m1);
+		coordinator.addMission(m2);
+		coordinator.addMission(m3);
 		
 		ObservableList<Spacecraft> fleet = 
 				FXCollections.observableArrayList(coordinator.getManagedFleet());
 		
-		/*
-		ObservableList<TelemetryData> telemetry = 
-				FXCollections.observableArrayList(); 
+		//Average fleet telemetry
 		
-		for(Spacecraft sc : fleet) { 
-			telemetry.add(sc.getTelemetry()); 
-			} 
-		*/
+		double fuelSum = 0, powerSum = 0, dataSum = 0;
+		int fuelCount = 0, powerCount = 0, dataCount = 0;
+
+		for (Spacecraft sc : fleet) {
+		    for (SCPart part : sc.getSCPartList()) {
+		        if (part instanceof Thruster thruster) {
+		            fuelSum += thruster.getCurrentCapacity();
+		            fuelCount++;
+		        }
+		        if (part instanceof SolarPanel panel) {
+		            powerSum += panel.getCurrentCapacity();
+		            powerCount++;
+		        }
+		        if (part instanceof Sensor sensor) {
+		            dataSum += sensor.getCurrentCapacityUsed();
+		            dataCount++;
+		        }
+		    }
+		}
+
+		double startFuel  = (fuelCount  > 0) ? fuelSum  / fuelCount  : 0;
+		double startPower = (powerCount > 0) ? powerSum / powerCount : 0;
+		double startData  = (dataCount  > 0) ? dataSum  / dataCount  : 0;
+
+		
 		//Stage 
 		
 		this.primaryStage = primaryStage; primaryStage.setTitle("AstroPath"); 
@@ -165,7 +226,7 @@ public class MainApplication extends Application{
 		Label activeFleet = new Label(" Active Fleet"); 
 		activeFleet.setStyle("-fx-text-fill: white;" + "-fx-font-size: 14px;"); 
 		
-		Label telemetryOverview = new Label(" Telemetry Overview"); 
+		Label telemetryOverview = new Label("  Spacecraft Telemetry Average"); 
 		telemetryOverview.setStyle("-fx-text-fill: white;" + "-fx-font-size: 14px;");
 		
 		Label warningLabel = new Label("Alerts "); 
@@ -173,53 +234,37 @@ public class MainApplication extends Application{
 		
 		// Gauges 
 		
-		/*
-		Gauge fuelGauge = GaugeBuilder.create() 
-				.title("fuel") 
-				.unit("%") 
-				.minValue(0) 
-				.maxValue(100) 
-				.value(tel1.getFuelLevel()) 
-				.build(); 
-		*/
 		
-		/*
-		fuelGauge.setValue(tel1.getFuelLevel()); 
-		fuelGauge.setBackgroundPaint(Color.WHITE); 
-		fuelGauge.setMaxSize(100, 100); 
-		*/
+		Gauge fuelGauge = GaugeBuilder.create()
+		        .title("Fuel")
+		        .unit("%")
+		        .minValue(0)
+		        .maxValue(100)
+		        .value(startFuel)
+		        .build();
+		fuelGauge.setBackgroundPaint(Color.WHITE);
+		fuelGauge.setMaxSize(100, 100);
+
+		Gauge tempGauge = GaugeBuilder.create()
+		        .title("Solar Power")
+		        .unit("%")
+		        .minValue(0)
+		        .maxValue(100)
+		        .value(startPower)
+		        .build();
+		tempGauge.setBackgroundPaint(Color.WHITE);
+		tempGauge.setMaxSize(100, 100);
+
+		Gauge signalGauge = GaugeBuilder.create()
+		        .title("Sensor Data")
+		        .unit("%")
+		        .minValue(0)
+		        .maxValue(100)
+		        .value(startData)
+		        .build();
+		signalGauge.setBackgroundPaint(Color.WHITE);
+		signalGauge.setMaxSize(100, 100);
 		
-		/*
-		Gauge tempGauge = GaugeBuilder.create() 
-				.title("temp") 
-				.unit("°C") 
-				.minValue(-150) 
-				.maxValue(150) 
-				.value(tel1.getTemperature()) 
-				.build(); 
-		*/
-		
-		/*
-		tempGauge.setValue(tel1.getTemperature()); 
-		tempGauge.setBackgroundPaint(Color.WHITE); 
-		tempGauge.setMaxSize(100, 100); 
-		*/
-		
-		/*
-		Gauge signalGauge = GaugeBuilder.create() 
-				.title("signal") 
-				.unit("%") 
-				.minValue(0) 
-				.maxValue(100) 
-				.value(tel1.getSignalStrength()) 
-				.build();
-		*/
-		
-		/*
-		signalGauge.setValue(tel1.getSignalStrength()); 
-		signalGauge.setBackgroundPaint(Color.WHITE); 
-		signalGauge.setMaxSize(100, 100); 
-		*/
 		
 		Gauge fuelTelemetryGauge = GaugeBuilder.create() 
 				.title("Fuel") 
@@ -233,8 +278,8 @@ public class MainApplication extends Application{
 		fuelTelemetryGauge.setMaxSize(100, 100); 
 		
 		Gauge tempTelemetryGauge = GaugeBuilder.create() 
-				.title("Temperature") 
-				.unit("°C") 
+				.title("Solar Power") 
+				.unit("%") 
 				.minValue(-150) 
 				.maxValue(150) 
 				.value(0) 
@@ -244,7 +289,7 @@ public class MainApplication extends Application{
 		tempTelemetryGauge.setMaxSize(100, 100); 
 		
 		Gauge signalTelemetryGauge = GaugeBuilder.create() 
-				.title("Signal") 
+				.title("Sensor Data") 
 				.unit("%") 
 				.minValue(0) 
 				.maxValue(100) 
@@ -255,78 +300,69 @@ public class MainApplication extends Application{
 		signalTelemetryGauge.setMaxSize(100, 100); 
 		
 		//Tables 
-		/*
-		TableView<SurfaceLander> surfaceTable = new TableView(); 
-		TableColumn <SurfaceLander, String> surfaceId = new TableColumn<>("ID");
-		TableColumn <SurfaceLander, String> surfaceName = new TableColumn<>("Name"); 
-		TableColumn <SurfaceLander, String> surfaceStatus = new TableColumn<>("Status"); 
-		*/
 		
-		/*
+		TableView<Spacecraft> surfaceTable = new TableView(); 
+		TableColumn <Spacecraft, String> surfaceId = new TableColumn<>("ID");
+		TableColumn <Spacecraft, String> surfaceName = new TableColumn<>("Name"); 
+		TableColumn <Spacecraft, String> surfaceStatus = new TableColumn<>("Status"); 
+		
+		
+		
 		surfaceId.setCellValueFactory( new PropertyValueFactory<>("id")); 
 		surfaceName.setCellValueFactory( new PropertyValueFactory<>("name")); 
 		surfaceStatus.setCellValueFactory( new PropertyValueFactory<>("status")); 
 		surfaceTable.getColumns().addAll(surfaceId, surfaceName, surfaceStatus); 
-		*/
 		
-		/*
-		ObservableList<SurfaceLander> surfaceData = FXCollections.observableArrayList(); 
-		/*surfaceData.add(s1);*/ 
-		
-		/*
-		surfaceData.addAll(fleet.stream().filter(sc -> sc instanceof SurfaceLander) 
-				.map(sc -> (SurfaceLander) sc).toList() ); 
-		
-		surfaceTable.setItems(surfaceData); 
+		ObservableList<Spacecraft> surfaceData = FXCollections.observableArrayList();
+		surfaceData.addAll(fleet.stream().filter(sc -> "Surface Lander".equals(sc.getType())).collect(Collectors.toList()));
+		surfaceTable.setItems(surfaceData);
+	  
 		surfaceTable.setMaxWidth(400); 
 		surfaceTable.setMaxHeight(300); 
 		
-		TableView<PlanetaryOrbiter> orbiterTable = new TableView(); 
-		TableColumn <PlanetaryOrbiter, String> orbiterId = new TableColumn<>("ID"); 
-		TableColumn <PlanetaryOrbiter, String> orbiterName = new TableColumn<>("Name"); 
-		TableColumn <PlanetaryOrbiter, String> orbiterStatus = new TableColumn<>("Status"); 
-		*/
+		TableView<Spacecraft> orbiterTable = new TableView(); 
+		TableColumn <Spacecraft, String> orbiterId = new TableColumn<>("ID"); 
+		TableColumn <Spacecraft, String> orbiterName = new TableColumn<>("Name"); 
+		TableColumn <Spacecraft, String> orbiterStatus = new TableColumn<>("Status"); 
 		
-		/*
+		
 		orbiterId.setCellValueFactory( new PropertyValueFactory<>("id")); 
 		orbiterName.setCellValueFactory( new PropertyValueFactory<>("name"));
 		orbiterStatus.setCellValueFactory( new PropertyValueFactory<>("status")); 
 		
 		orbiterTable.getColumns().addAll(orbiterId, orbiterName, orbiterStatus); 
 		
-		ObservableList<PlanetaryOrbiter> orbiterData = FXCollections.observableArrayList(); 
-		/* orbiterData.add(p1); */ 
-		/*
-		orbiterData.addAll(fleet.stream().filter(sc -> sc instanceof PlanetaryOrbiter) 
-				.map(sc -> (PlanetaryOrbiter) sc).toList() ); 
+		ObservableList<Spacecraft> orbiterData = FXCollections.observableArrayList(); 
+		
+		orbiterData.addAll(fleet.stream().filter(sc -> 
+			"Planetary Orbiter".equals(sc.getType())).collect(Collectors.toList()));
 		
 		orbiterTable.setItems(orbiterData); 
 		orbiterTable.setMaxWidth(400); 
 		orbiterTable.setMaxHeight(300); 
 		
-		TableView<DeepSpaceProbe> probeTable = new TableView(); 
-		TableColumn <DeepSpaceProbe, String> probeId = new TableColumn<>("ID"); 
-		TableColumn <DeepSpaceProbe, String> probeName = new TableColumn<>("Name"); 
-		TableColumn <DeepSpaceProbe, String> probeStatus = new TableColumn<>("Status"); 
+		TableView<Spacecraft> probeTable = new TableView(); 
+		TableColumn <Spacecraft, String> probeId = new TableColumn<>("ID"); 
+		TableColumn <Spacecraft, String> probeName = new TableColumn<>("Name"); 
+		TableColumn <Spacecraft, String> probeStatus = new TableColumn<>("Status"); 
 		
-		*/
-		/*
+		
+		
 		probeId.setCellValueFactory( new PropertyValueFactory<>("id")); 
 		probeName.setCellValueFactory( new PropertyValueFactory<>("name")); 
 		probeStatus.setCellValueFactory( new PropertyValueFactory<>("status")); 
 		probeTable.getColumns().addAll(probeId, probeName, probeStatus); 
 		
-		ObservableList<DeepSpaceProbe> probeData = FXCollections.observableArrayList(); 
-		/* probeData.add(d1); */ 
+		ObservableList<Spacecraft> probeData = FXCollections.observableArrayList(); 
 		
-		/*
-		probeData.addAll(fleet.stream().filter(sc -> sc instanceof DeepSpaceProbe) 
-				.map(sc -> (DeepSpaceProbe) sc).toList() ); 
+		
+		probeData.addAll(fleet.stream().filter(sc -> 
+			"Deep-Space Probe".equals(sc.getType())).collect(Collectors.toList()));
 		
 		probeTable.setItems(probeData); 
 		probeTable.setMaxWidth(400); 
 		probeTable.setMaxHeight(300); 
-		*/
+		
 		
 		TableView<Spacecraft> dashFleetTable = new TableView(); 
 		TableColumn <Spacecraft, String> activeId = new TableColumn<>("ID"); 
@@ -344,52 +380,99 @@ public class MainApplication extends Application{
 		dashFleetTable.setMaxHeight(200); 
 		
 		TableView<Mission> objectivesTable = new TableView(); 
-		TableColumn <Mission, String> missionNameCol = new TableColumn<>("Mission"); 
-		TableColumn <Mission, MissionStage> stageCol = new TableColumn<>("Stage"); 
-		TableColumn <Mission, String> objectiveCol = new TableColumn<>("Objective"); 
+		TableColumn <Mission, String> missionNameCol = new TableColumn<>("name"); 
+		TableColumn <Mission, String> stageCol = new TableColumn<>("Stage"); 
 		TableColumn<Mission, String> spaceCraftCol = new TableColumn<>("SpaceCraft"); 
-		TableColumn <Mission, Time> startTimeCol = new TableColumn<>("Start"); 
-		TableColumn <Mission, Time> endTimeCol = new TableColumn<>("Est. End"); 
-		TableColumn <Mission, Integer> progressCol = new TableColumn<>("Progress"); 
+		TableColumn <Mission, String> startTimeCol = new TableColumn<>("Start"); 
+		TableColumn <Mission, String> endTimeCol = new TableColumn<>("Est. End"); 
 		
-		missionNameCol.setCellValueFactory( new PropertyValueFactory<>("mission")); 
-		stageCol.setCellValueFactory( new PropertyValueFactory<>("stage")); 
-		objectiveCol.setCellValueFactory( new PropertyValueFactory<>("objective")); 
+		missionNameCol.setCellValueFactory( new PropertyValueFactory<>("name")); 
+		stageCol.setCellValueFactory(cell ->
+	    new SimpleStringProperty(
+	        cell.getValue()
+	            .MissionStageList
+	            .get(0)
+	            .name
+	    		)
+			); 
 		
-	spaceCraftCol.setCellValueFactory( cell -> 
+		spaceCraftCol.setCellValueFactory( cell -> 
 			new SimpleStringProperty( 
 				cell.getValue().getSCList()
 				.stream() 
 				.map(sc -> sc.getName())
 				.collect(Collectors.joining(", ")) 
 				)); 
+	
+		startTimeCol.setCellValueFactory(cell ->
+	    new SimpleStringProperty(
+	        String.valueOf(
+	            cell.getValue()
+	                .MissionStageList
+	                .get(0)
+	                .startTime
+	                .getTotalSeconds()
+	        		)
+	    		)
+			);
+
+		endTimeCol.setCellValueFactory(cell ->
+	    	new SimpleStringProperty(	
+	    		String.valueOf(
+	    				cell.getValue()
+	    				.MissionStageList
+	    				.get(0)
+	    				.targetTime
+	    				.getTotalSeconds()
+	    				)
+	    			)
+				);
 		
-		startTimeCol.setCellValueFactory( new PropertyValueFactory<>("startTimestamp")); 
-		endTimeCol.setCellValueFactory( new PropertyValueFactory<>("targetTimestamp")); 
-		progressCol.setCellValueFactory( new PropertyValueFactory<>("progressStatus")); 
-		
-		objectivesTable.getColumns().addAll(missionNameCol, stageCol, objectiveCol,spaceCraftCol, startTimeCol, endTimeCol, progressCol);
+		ObservableList<Mission> missionData =
+			    FXCollections.observableArrayList(coordinator.getCurrentMissions());
+			objectivesTable.setItems(missionData);
+
+		objectivesTable.getColumns().addAll(missionNameCol, stageCol, spaceCraftCol, startTimeCol, endTimeCol);
 		objectivesTable.setMaxWidth(800); 
 		objectivesTable.setMaxHeight(600); 
 		
-		/*
-		TableView<TelemetryData> telemetryTable = new TableView(); 
-		//telemetryTable.setPlaceholder(new Label("No Telemetry Data yet...")); 
-		TableColumn <TelemetryData, Double> fuelCol = new TableColumn<>("Fuel Level");
-		TableColumn <TelemetryData, Double> tempCol = new TableColumn<>("Temperature in °C"); 
-		TableColumn <TelemetryData, Double> signalCol = new TableColumn<>("Signal Strength"); 
-		*/
-		
-		/*
-		fuelCol.setCellValueFactory( new PropertyValueFactory<>("fuelLevel")); 
-		tempCol.setCellValueFactory( new PropertyValueFactory<>("temperature")); 
-		signalCol.setCellValueFactory( new PropertyValueFactory<>("signalStrength")); 
-		
-		telemetryTable.getColumns().addAll(fuelCol, tempCol, signalCol); 
-		telemetryTable.setItems(telemetry); 
-		telemetryTable.setMinWidth(500); 
-		telemetryTable.setMinHeight(400); 
-		*/
+		TableView<Spacecraft> telemetryTable = new TableView<>();
+		telemetryTable.setPlaceholder(new Label("No Telemetry Data yet..."));
+		TableColumn <Spacecraft, String> tName = new TableColumn<>("Name");
+		TableColumn <Spacecraft, String> fuelCol = new TableColumn<>("Fuel");
+		TableColumn <Spacecraft, String> tempCol = new TableColumn<>("Solar Power");
+		TableColumn <Spacecraft, String> signalCol = new TableColumn<>("Sensor Data");
+
+		tName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+		fuelCol.setCellValueFactory(cell -> {
+		    double v = 0;
+		    for (SCPart part : cell.getValue().getSCPartList()) {
+		        if (part instanceof Thruster t) v = t.getCurrentCapacity();
+		    }
+		    return new SimpleStringProperty(String.valueOf(v));
+		});
+
+		tempCol.setCellValueFactory(cell -> {
+		    double v = 0;
+		    for (SCPart part : cell.getValue().getSCPartList()) {
+		        if (part instanceof SolarPanel p) v = p.getCurrentCapacity();
+		    }
+		    return new SimpleStringProperty(String.valueOf(v));
+		});
+
+		signalCol.setCellValueFactory(cell -> {
+		    double v = 0;
+		    for (SCPart part : cell.getValue().getSCPartList()) {
+		        if (part instanceof Sensor s) v = s.getCurrentCapacityUsed();
+		    }
+		    return new SimpleStringProperty(String.valueOf(v));
+		});
+
+		telemetryTable.getColumns().addAll(tName, fuelCol, tempCol, signalCol);
+		telemetryTable.setItems(fleet);
+		telemetryTable.setMinWidth(300);
+		telemetryTable.setMaxHeight(250);
 		
 		TableView<Spacecraft> telemetrySpacecrafts = new TableView(); 
 		TableColumn <Spacecraft, String> idCol = new TableColumn<>("ID"); 
@@ -402,17 +485,26 @@ public class MainApplication extends Application{
 		
 		telemetrySpacecrafts.getColumns().addAll(idCol, nameCol, statusCol); 
 		telemetrySpacecrafts.setItems(fleet); 
-		telemetrySpacecrafts.getSelectionModel() 
-			.selectedItemProperty() 
-			.addListener((obs, oldCraft, newCraft) -> { if(newCraft != null) { 
-				/*
-				TelemetryData t = newCraft.getTelemetry(); 
 				
-				fuelTelemetryGauge.setValue(t.getFuelLevel()); 
-				tempTelemetryGauge.setValue(t.getTemperature()); 
-				signalTelemetryGauge.setValue(t.getSignalStrength());
-				*/ 
-				} }); 
+		telemetrySpacecrafts.getSelectionModel()
+	    .selectedItemProperty()
+	    .addListener((obs, oldCraft, newCraft) -> {
+	        if (newCraft != null) {
+	            double fuel = 0, power = 0, data = 0;
+	            for (SCPart part : newCraft.getSCPartList()) {
+	                if (part instanceof Thruster t)   fuel  = t.getCurrentCapacity();
+	                if (part instanceof SolarPanel p) power = p.getCurrentCapacity();
+	                if (part instanceof Sensor s)     data  = s.getCurrentCapacityUsed();
+	            }
+	            fuelTelemetryGauge.setValue(fuel);
+	            tempTelemetryGauge.setValue(power);
+	            signalTelemetryGauge.setValue(data);
+
+	            telemetryTable.getSelectionModel().select(newCraft);
+	            telemetryTable.scrollTo(newCraft);
+	        }
+	    });
+
 		
 		telemetrySpacecrafts.setMaxWidth(300); 
 		telemetrySpacecrafts.setMaxHeight(200); 
@@ -422,33 +514,37 @@ public class MainApplication extends Application{
 		eventLogTable.setMaxWidth(800); 
 		eventLogTable.setMaxHeight(800); 
 		
-		// Textfields 
+		//Removing redundant empty right side column
 		
-		/* TextField landerNameField = new TextField(); 
-		 * TextField landerIdField = new TextField(); 
-		 * TextField landerStatusField = new TextField(); 
-		 * TextField landerTelemetryField = new TextField(); */
-		
-		ComboBox<Spacecraft> spaceCraftSelection = new ComboBox(fleet); 
-		TextField missionNameField = new TextField(); 
-		TextField missionObjectiveField = new TextField(); 
-		// TextField missionStartField = new TextField(); 
-		// TextField missionEndField = new TextField(); 
-		// Time startTime = Time.parse(missionStartField.getText()); 
-		// Time endTime = Time.parse(); 
+		surfaceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		orbiterTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		probeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		dashFleetTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		objectivesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		telemetryTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		telemetrySpacecrafts.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		
 		//Warning Box 
 		
 		ObservableList<String> warnings = FXCollections.observableArrayList(); 
 		
-		/*
-		for(Spacecraft sc : fleet){
-			String diagnostic = sc.performSelfDiagnostic(); 
 		
-			if(diagnostic.contains("Warning")) { 
-				warnings.add(diagnostic); } 
-		} 
-		*/
+		for (Spacecraft sc : fleet) {
+		    for (SCPart part : sc.getSCPartList()) {
+
+		        if (part.getStatus() == SCPart.Status.WARNING ||
+		            part.getStatus() == SCPart.Status.CRITICAL ||
+		            part.getStatus() == SCPart.Status.OFFLINE) {
+
+		            warnings.add(
+		                sc.getName() + " - "
+		                + part.getClass().getSimpleName()+ " : "
+		                + part.getStatus()
+		            );
+		        }
+		    }
+		}
+		
 		if(warnings.isEmpty()) { 
 			warnings.add("No Warnings or Alerts."); 
 			} 
@@ -465,14 +561,14 @@ public class MainApplication extends Application{
 		layoutStart.setStyle( "-fx-background-image: url('/shutterstock_1847866900-1-600x400.jpg');" 
 				+ "-fx-background-size: cover;" ); 
 		
-		/*
+		
 		HBox dashGauge = new HBox(fuelGauge, tempGauge, signalGauge); 
 		dashGauge.setAlignment(Pos.BOTTOM_LEFT); 
 		dashGauge.setPadding(new Insets(20)); 
 		dashGauge.setSpacing(20); 
 		dashGauge.setStyle("-fx-background-color: rgba(50, 50, 50, 0.4);" 
 				+ "-fx-background-radius: 12;"); 
-		*/
+		
 		
 		VBox telGauge = new VBox(fuelTelemetryGauge, tempTelemetryGauge, signalTelemetryGauge); 
 		telGauge.setSpacing(20); 
@@ -486,7 +582,7 @@ public class MainApplication extends Application{
 		HBox quitButton = new HBox(button2); 
 		quitButton.setAlignment(Pos.TOP_RIGHT); 
 		
-		/*
+		
 		VBox tableBox = new VBox(surfaceTable); 
 		tableBox.setAlignment(Pos.CENTER); 
 		
@@ -495,13 +591,13 @@ public class MainApplication extends Application{
 		
 		VBox tableBox3 = new VBox(probeTable); 
 		tableBox3.setAlignment(Pos.CENTER); 
-		*/
+		
 		VBox tableBoxObjectives = new VBox(objectivesTable); 
 		tableBoxObjectives.setAlignment(Pos.CENTER); 
-		/*
+		
 		VBox tableBoxTelemetry = new VBox(telemetryTable); 
 		tableBoxTelemetry.setAlignment(Pos.CENTER_RIGHT); 
-		*/
+		
 		VBox tableBoxTelemetrySc = new VBox(telemetrySpacecrafts); 
 		tableBoxTelemetrySc.setAlignment(Pos.CENTER_LEFT); 
 		
@@ -516,10 +612,10 @@ public class MainApplication extends Application{
 		activeFleetBox.setAlignment(Pos.CENTER_LEFT); 
 		activeFleetBox.setPadding(new Insets(20)); 
 		
-		/*
+		
 		VBox telOverview = new VBox(telemetryOverview, dashGauge); 
 		telOverview.setAlignment(Pos.BOTTOM_LEFT); 
-		*/
+		
 		
 		layoutFleet = new BorderPane(); 
 		layoutFleet.setCenter(spacecraftBtns); 
@@ -527,9 +623,9 @@ public class MainApplication extends Application{
 				+ "-fx-background-size: cover;" ); 
 		
 		layoutDash = new BorderPane(); 
-		//layoutDash.setRight(quitButton); 
+		layoutDash.setRight(quitButton); 
 		layoutDash.setRight(warningBox); 
-		//layoutDash.setBottom(telOverview); 
+		layoutDash.setBottom(telOverview); 
 		layoutDash.setCenter(activeFleetBox); 
 		layoutDash.setStyle( "-fx-background-image: url('/7NvodtH-1080p-wallpaper-space.jpg');" 
 				+ "-fx-background-size: cover;" ); 
@@ -567,34 +663,35 @@ public class MainApplication extends Application{
 		leftProbeBox.getChildren().addAll(backBox3, probeImage); 
 		leftProbeBox.setSpacing(200); 
 		
-		/*
+		
 		HBox telemetryBox = new HBox(tableBoxTelemetrySc, tableBoxTelemetry, telGauge); 
-		telemetryBox.setSpacing(40); 
-		*/
+		telemetryBox.setSpacing(60);
+		telemetryBox.setPadding(new Insets(150));
+		
 		
 		layoutSurfaceLander = new BorderPane(); 
 		layoutSurfaceLander.setLeft(leftSurfaceBox); 
 		surfaceImage.setPadding(new Insets(0, 0, 0, 20)); 
-		//layoutSurfaceLander.setCenter(tableBox); 
+		layoutSurfaceLander.setCenter(tableBox); 
 		layoutSurfaceLander.setStyle( "-fx-background-image: url('/nathan-anderson-KvgB81s4dF0-unsplash.jpg');" 
 				+ "-fx-background-size: cover;" ); 
 		
 		layoutPlanetaryOrbiter = new BorderPane(); 
 		layoutPlanetaryOrbiter.setLeft(leftOrbiterBox); 
 		orbiterImage.setPadding(new Insets(0, 0, 0, 20)); 
-		//layoutPlanetaryOrbiter.setCenter(tableBox2); 
+		layoutPlanetaryOrbiter.setCenter(tableBox2); 
 		layoutPlanetaryOrbiter.setStyle( "-fx-background-image: url('/nathan-anderson-KvgB81s4dF0-unsplash.jpg');" 
 				+ "-fx-background-size: cover;" ); 
 		
 		layoutSpaceProbe = new BorderPane(); 
 		layoutSpaceProbe.setLeft(leftProbeBox); 
 		probeImage.setPadding(new Insets(0, 0, 0, 20)); 
-		//layoutSpaceProbe.setCenter(tableBox3); 
+		layoutSpaceProbe.setCenter(tableBox3); 
 		layoutSpaceProbe.setStyle( "-fx-background-image: url('/nathan-anderson-KvgB81s4dF0-unsplash.jpg');" 
 				+ "-fx-background-size: cover;" ); 
 		
 		layoutTelemetry = new BorderPane(); 
-		//layoutTelemetry.setCenter(telemetryBox); 
+		layoutTelemetry.setCenter(telemetryBox); 
 		layoutTelemetry.setStyle( "-fx-background-image: url('/nathan-anderson-KvgB81s4dF0-unsplash.jpg');" 
 				+ "-fx-background-size: cover;" );
 		
@@ -634,19 +731,6 @@ public class MainApplication extends Application{
 		backButton2.setOnAction(e -> setView(layoutFleet, 1200, 800)); 
 		backButton3.setOnAction(e -> setView(layoutFleet, 1200, 800)); 
 		spaceProbeBtn.setOnAction(e -> setView(layoutSpaceProbe, 1200, 800)); 
-		
-		/*addMission.setOnAction(e -> { Mission m = new Mission( missionNameField.getText(), 
-		 * missionObjectiveField.getText(), 0, List.of(spaceCraftSelection.getValue()) ); 
-		 * MissionStage mStage = new MissionStage(m); }); 
-		 * landerButton.setOnAction(e -> { String name = landerNameField.getText(); 
-		 * String id = landerIdField.getText(); 
-		 * String status = landerStatusField.getText(); 
-		 * String telemetryData = landerTelemetryField.getText(); 
-		 * SurfaceLander s = new SurfaceLander(name, id, status, TelemetryData, String, String); 
-		 * surfaceData.add(s); 
-		 * landerNameField.clear(); 
-		 * landerIdField.clear(); 
-		 * landerStatusField.clear(); });*/
 		
 		//Button adjustment 
 		
@@ -740,7 +824,7 @@ public class MainApplication extends Application{
 		Button homeButton = new Button("AstroPath"); 
 		Button fleetButton = new Button("Fleet"); 
 		Button telemetryButton = new Button("Telemetry"); 
-		Button objectivesButton = new Button("Objectives"); 
+		Button objectivesButton = new Button("Missions"); 
 		Button eventLogButton = new Button("Event Log"); 
 		
 		//Button Size and Font 
