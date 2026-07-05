@@ -22,8 +22,8 @@ public class SolarPanel extends SCPart {
 	}
 
 	// Das Panel arbeitet: erzeugt Energie und lädt den Speicher auf
-	public void operate() {
-		this.currentCapacity = this.currentCapacity + this.productionRate;
+	public void operate(Time timeDiff) {
+		this.currentCapacity = this.currentCapacity + (this.productionRate * timeDiff.seconds);
 
 		// Speicher kann nicht über das Maximum hinaus geladen werden
 		if (this.currentCapacity > this.maxCapacity) {

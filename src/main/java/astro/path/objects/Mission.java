@@ -9,6 +9,7 @@ public class Mission {
 	public String id;
 	public List<Spacecraft> SCList;
 	public List<MissionStage> MissionStageList;
+	public int currentStage;
 	public String name;
 /*
 	public MissionStage currentMissionStage;
@@ -38,6 +39,7 @@ public class Mission {
     	this.MissionStageList = new ArrayList<MissionStage>();  
     	this.name = "WITHOUT SessionID";
     	this.id = "0";
+    	this.currentStage = 0;
     	
     	MissionStage startMS = new MissionStage(this.id);
     	startMS.name = "Nothing yet";
@@ -50,6 +52,7 @@ public class Mission {
     	this.MissionStageList = new ArrayList<MissionStage>();  
     	this.name = "WITH SessionID";
     	this.id = "0";
+    	this.currentStage = 0;
     	
     	MissionStage startMS = new MissionStage(this.id);
     	startMS.name = "Nothing yet";

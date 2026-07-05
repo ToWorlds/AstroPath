@@ -6,6 +6,7 @@ import java.time.Duration;
 
 public class Session {
 	public List<Mission> missionList;
+	public Time oldTime;
 	public Time currentTime;
 	public String name;
 	public String id;

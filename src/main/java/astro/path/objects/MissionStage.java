@@ -8,6 +8,7 @@ public class MissionStage {
 	public List<SCPart> activatedParts; // Change String Class into RocketPart Class
 	public String missionID;
 	public Time targetTime;
+	public Time currentTime;
 	public Time startTime;
 	
 	public MissionStage(String missionID) {
@@ -31,12 +32,23 @@ public class MissionStage {
 	}
 	
 	
-	public void StartStage() {
-		this.startTime.seconds = 0;
+	public void StartStage(Time currentTime) {
+		this.startTime.seconds = currentTime.seconds;
+		this.currentTime.seconds = 0;
 	}
 	
 	public void addActivatedPart(SCPart scp) {
 		this.activatedParts.add(scp);
 	}
-
+	
+	public int update(Time timeDiff) {
+		this.currentTime.seconds += timeDiff.seconds;
+		if (this.currentTime.seconds > this.targetTime.seconds) {
+			return 1;
+		} else {
+			return 0;
+		}
+		
+		
+	}
 }

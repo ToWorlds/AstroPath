@@ -27,14 +27,14 @@ public class Thruster extends SCPart{
 	}
 
 	// Der Thruster arbeitet: verbraucht Treibstoff und aktualisiert seinen Status
-	public void operate() {
+	public void operate(Time timeDiff) {
 		// Kein Treibstoff mehr: Thruster schaltet ab
 		if (currentCapacity <= 0) {
 			shutDown();
 			return;
 		}
 
-		this.currentCapacity = this.currentCapacity - this.consumptionRate;
+		this.currentCapacity = this.currentCapacity - (this.consumptionRate * timeDiff.seconds);
 
 		if (this.currentCapacity <= 0) {
 			this.currentCapacity = 0;

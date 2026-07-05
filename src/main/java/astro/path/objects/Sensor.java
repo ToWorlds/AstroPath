@@ -29,11 +29,13 @@ public class Sensor extends SCPart {
 	}
 
 	// Der Sensor arbeitet: sammelt Daten und sendet welche
-	public void operate() {
+	public void operate(Time timeDiff) {
 		// neue Daten sammeln
-		this.currentCapacityUsed = this.currentCapacityUsed + this.dataCollectionRate;
+		this.currentCapacityUsed = this.currentCapacityUsed + 
+				(this.dataCollectionRate * timeDiff.seconds);
 		// Daten senden (Speicher wird wieder frei)
-		this.currentCapacityUsed = this.currentCapacityUsed - this.dataTransmissionRate;
+		this.currentCapacityUsed = this.currentCapacityUsed - 
+				(this.dataTransmissionRate * timeDiff.seconds);
 
 		// Speicher kann nicht unter 0 fallen
 		if (this.currentCapacityUsed < 0) {
