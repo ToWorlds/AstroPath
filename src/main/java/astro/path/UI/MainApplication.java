@@ -108,17 +108,23 @@ public class MainApplication extends Application{
 		TelemetryData tel1 = new TelemetryData(80, 22, 95);
 		TelemetryData tel2 = new TelemetryData(40, 20, 91);
 		TelemetryData tel3 = new TelemetryData(15, 23, 97);
+		*/
 		
-		/* ObservableList<TelemetryData> telemetry = FXCollections.observableArrayList();
-		 *  telemetry.addAll(tel1, tel2, tel3); */ 
+		/*
+		ObservableList<TelemetryData> telemetry = FXCollections.observableArrayList();
+		telemetry.addAll(tel1, tel2, tel3);
+		*/
+		
 		/*
 		SurfaceLander s1 = new SurfaceLander("Apollo-N", "2", "🟢", tel1, "mobSys", "landingGearStat"); 
 		PlanetaryOrbiter p1 = new PlanetaryOrbiter("Bravo-B", "3", "🟡", tel2, "parameters", "payload"); 
 		DeepSpaceProbe d1 = new DeepSpaceProbe("Celeste-C", "4", "🔴", tel3, "antenna", "protocol"); 
 		*/
-		//ObservableList<Spacecraft> fleet = FXCollections.observableArrayList(); 
-		//fleet.addAll(s1, p1, d1);  
 		
+		/*
+		ObservableList<Spacecraft> fleet = FXCollections.observableArrayList(); 
+		fleet.addAll(s1, p1, d1);  
+		*/
 		MissionCoordinator coordinator = new MissionCoordinator(); 
 		
 		/*
@@ -126,8 +132,10 @@ public class MainApplication extends Application{
 		coordinator.addSpacecraft(p1); 
 		coordinator.addSpacecraft(d1); 
 		*/
+		
 		ObservableList<Spacecraft> fleet = 
 				FXCollections.observableArrayList(coordinator.getManagedFleet());
+		
 		/*
 		ObservableList<TelemetryData> telemetry = 
 				FXCollections.observableArrayList(); 
@@ -247,7 +255,6 @@ public class MainApplication extends Application{
 		signalTelemetryGauge.setMaxSize(100, 100); 
 		
 		//Tables 
-		
 		/*
 		TableView<SurfaceLander> surfaceTable = new TableView(); 
 		TableColumn <SurfaceLander, String> surfaceId = new TableColumn<>("ID");
@@ -264,7 +271,8 @@ public class MainApplication extends Application{
 		
 		/*
 		ObservableList<SurfaceLander> surfaceData = FXCollections.observableArrayList(); 
-		/* surfaceData.add(s1); */ 
+		/*surfaceData.add(s1);*/ 
+		
 		/*
 		surfaceData.addAll(fleet.stream().filter(sc -> sc instanceof SurfaceLander) 
 				.map(sc -> (SurfaceLander) sc).toList() ); 
@@ -277,6 +285,9 @@ public class MainApplication extends Application{
 		TableColumn <PlanetaryOrbiter, String> orbiterId = new TableColumn<>("ID"); 
 		TableColumn <PlanetaryOrbiter, String> orbiterName = new TableColumn<>("Name"); 
 		TableColumn <PlanetaryOrbiter, String> orbiterStatus = new TableColumn<>("Status"); 
+		*/
+		
+		/*
 		orbiterId.setCellValueFactory( new PropertyValueFactory<>("id")); 
 		orbiterName.setCellValueFactory( new PropertyValueFactory<>("name"));
 		orbiterStatus.setCellValueFactory( new PropertyValueFactory<>("status")); 
@@ -298,6 +309,8 @@ public class MainApplication extends Application{
 		TableColumn <DeepSpaceProbe, String> probeName = new TableColumn<>("Name"); 
 		TableColumn <DeepSpaceProbe, String> probeStatus = new TableColumn<>("Status"); 
 		
+		*/
+		/*
 		probeId.setCellValueFactory( new PropertyValueFactory<>("id")); 
 		probeName.setCellValueFactory( new PropertyValueFactory<>("name")); 
 		probeStatus.setCellValueFactory( new PropertyValueFactory<>("status")); 
@@ -305,6 +318,7 @@ public class MainApplication extends Application{
 		
 		ObservableList<DeepSpaceProbe> probeData = FXCollections.observableArrayList(); 
 		/* probeData.add(d1); */ 
+		
 		/*
 		probeData.addAll(fleet.stream().filter(sc -> sc instanceof DeepSpaceProbe) 
 				.map(sc -> (DeepSpaceProbe) sc).toList() ); 
@@ -312,6 +326,7 @@ public class MainApplication extends Application{
 		probeTable.setItems(probeData); 
 		probeTable.setMaxWidth(400); 
 		probeTable.setMaxHeight(300); 
+		*/
 		
 		TableView<Spacecraft> dashFleetTable = new TableView(); 
 		TableColumn <Spacecraft, String> activeId = new TableColumn<>("ID"); 
@@ -357,12 +372,15 @@ public class MainApplication extends Application{
 		objectivesTable.setMaxWidth(800); 
 		objectivesTable.setMaxHeight(600); 
 		
+		/*
 		TableView<TelemetryData> telemetryTable = new TableView(); 
 		//telemetryTable.setPlaceholder(new Label("No Telemetry Data yet...")); 
 		TableColumn <TelemetryData, Double> fuelCol = new TableColumn<>("Fuel Level");
 		TableColumn <TelemetryData, Double> tempCol = new TableColumn<>("Temperature in °C"); 
 		TableColumn <TelemetryData, Double> signalCol = new TableColumn<>("Signal Strength"); 
+		*/
 		
+		/*
 		fuelCol.setCellValueFactory( new PropertyValueFactory<>("fuelLevel")); 
 		tempCol.setCellValueFactory( new PropertyValueFactory<>("temperature")); 
 		signalCol.setCellValueFactory( new PropertyValueFactory<>("signalStrength")); 
@@ -371,6 +389,7 @@ public class MainApplication extends Application{
 		telemetryTable.setItems(telemetry); 
 		telemetryTable.setMinWidth(500); 
 		telemetryTable.setMinHeight(400); 
+		*/
 		
 		TableView<Spacecraft> telemetrySpacecrafts = new TableView(); 
 		TableColumn <Spacecraft, String> idCol = new TableColumn<>("ID"); 
@@ -386,11 +405,13 @@ public class MainApplication extends Application{
 		telemetrySpacecrafts.getSelectionModel() 
 			.selectedItemProperty() 
 			.addListener((obs, oldCraft, newCraft) -> { if(newCraft != null) { 
+				/*
 				TelemetryData t = newCraft.getTelemetry(); 
 				
 				fuelTelemetryGauge.setValue(t.getFuelLevel()); 
 				tempTelemetryGauge.setValue(t.getTemperature()); 
-				signalTelemetryGauge.setValue(t.getSignalStrength()); 
+				signalTelemetryGauge.setValue(t.getSignalStrength());
+				*/ 
 				} }); 
 		
 		telemetrySpacecrafts.setMaxWidth(300); 
@@ -407,7 +428,7 @@ public class MainApplication extends Application{
 		 * TextField landerIdField = new TextField(); 
 		 * TextField landerStatusField = new TextField(); 
 		 * TextField landerTelemetryField = new TextField(); */
-		/*
+		
 		ComboBox<Spacecraft> spaceCraftSelection = new ComboBox(fleet); 
 		TextField missionNameField = new TextField(); 
 		TextField missionObjectiveField = new TextField(); 
@@ -420,13 +441,14 @@ public class MainApplication extends Application{
 		
 		ObservableList<String> warnings = FXCollections.observableArrayList(); 
 		
+		/*
 		for(Spacecraft sc : fleet){
 			String diagnostic = sc.performSelfDiagnostic(); 
 		
 			if(diagnostic.contains("Warning")) { 
 				warnings.add(diagnostic); } 
 		} 
-		
+		*/
 		if(warnings.isEmpty()) { 
 			warnings.add("No Warnings or Alerts."); 
 			} 
@@ -443,12 +465,14 @@ public class MainApplication extends Application{
 		layoutStart.setStyle( "-fx-background-image: url('/shutterstock_1847866900-1-600x400.jpg');" 
 				+ "-fx-background-size: cover;" ); 
 		
+		/*
 		HBox dashGauge = new HBox(fuelGauge, tempGauge, signalGauge); 
 		dashGauge.setAlignment(Pos.BOTTOM_LEFT); 
 		dashGauge.setPadding(new Insets(20)); 
 		dashGauge.setSpacing(20); 
 		dashGauge.setStyle("-fx-background-color: rgba(50, 50, 50, 0.4);" 
 				+ "-fx-background-radius: 12;"); 
+		*/
 		
 		VBox telGauge = new VBox(fuelTelemetryGauge, tempTelemetryGauge, signalTelemetryGauge); 
 		telGauge.setSpacing(20); 
@@ -462,6 +486,7 @@ public class MainApplication extends Application{
 		HBox quitButton = new HBox(button2); 
 		quitButton.setAlignment(Pos.TOP_RIGHT); 
 		
+		/*
 		VBox tableBox = new VBox(surfaceTable); 
 		tableBox.setAlignment(Pos.CENTER); 
 		
@@ -470,13 +495,13 @@ public class MainApplication extends Application{
 		
 		VBox tableBox3 = new VBox(probeTable); 
 		tableBox3.setAlignment(Pos.CENTER); 
-		
+		*/
 		VBox tableBoxObjectives = new VBox(objectivesTable); 
 		tableBoxObjectives.setAlignment(Pos.CENTER); 
-		
+		/*
 		VBox tableBoxTelemetry = new VBox(telemetryTable); 
 		tableBoxTelemetry.setAlignment(Pos.CENTER_RIGHT); 
-		
+		*/
 		VBox tableBoxTelemetrySc = new VBox(telemetrySpacecrafts); 
 		tableBoxTelemetrySc.setAlignment(Pos.CENTER_LEFT); 
 		
@@ -491,8 +516,10 @@ public class MainApplication extends Application{
 		activeFleetBox.setAlignment(Pos.CENTER_LEFT); 
 		activeFleetBox.setPadding(new Insets(20)); 
 		
+		/*
 		VBox telOverview = new VBox(telemetryOverview, dashGauge); 
 		telOverview.setAlignment(Pos.BOTTOM_LEFT); 
+		*/
 		
 		layoutFleet = new BorderPane(); 
 		layoutFleet.setCenter(spacecraftBtns); 
@@ -502,7 +529,7 @@ public class MainApplication extends Application{
 		layoutDash = new BorderPane(); 
 		//layoutDash.setRight(quitButton); 
 		layoutDash.setRight(warningBox); 
-		layoutDash.setBottom(telOverview); 
+		//layoutDash.setBottom(telOverview); 
 		layoutDash.setCenter(activeFleetBox); 
 		layoutDash.setStyle( "-fx-background-image: url('/7NvodtH-1080p-wallpaper-space.jpg');" 
 				+ "-fx-background-size: cover;" ); 
@@ -540,32 +567,34 @@ public class MainApplication extends Application{
 		leftProbeBox.getChildren().addAll(backBox3, probeImage); 
 		leftProbeBox.setSpacing(200); 
 		
+		/*
 		HBox telemetryBox = new HBox(tableBoxTelemetrySc, tableBoxTelemetry, telGauge); 
 		telemetryBox.setSpacing(40); 
+		*/
 		
 		layoutSurfaceLander = new BorderPane(); 
 		layoutSurfaceLander.setLeft(leftSurfaceBox); 
 		surfaceImage.setPadding(new Insets(0, 0, 0, 20)); 
-		layoutSurfaceLander.setCenter(tableBox); 
+		//layoutSurfaceLander.setCenter(tableBox); 
 		layoutSurfaceLander.setStyle( "-fx-background-image: url('/nathan-anderson-KvgB81s4dF0-unsplash.jpg');" 
 				+ "-fx-background-size: cover;" ); 
 		
 		layoutPlanetaryOrbiter = new BorderPane(); 
 		layoutPlanetaryOrbiter.setLeft(leftOrbiterBox); 
 		orbiterImage.setPadding(new Insets(0, 0, 0, 20)); 
-		layoutPlanetaryOrbiter.setCenter(tableBox2); 
+		//layoutPlanetaryOrbiter.setCenter(tableBox2); 
 		layoutPlanetaryOrbiter.setStyle( "-fx-background-image: url('/nathan-anderson-KvgB81s4dF0-unsplash.jpg');" 
 				+ "-fx-background-size: cover;" ); 
 		
 		layoutSpaceProbe = new BorderPane(); 
 		layoutSpaceProbe.setLeft(leftProbeBox); 
 		probeImage.setPadding(new Insets(0, 0, 0, 20)); 
-		layoutSpaceProbe.setCenter(tableBox3); 
+		//layoutSpaceProbe.setCenter(tableBox3); 
 		layoutSpaceProbe.setStyle( "-fx-background-image: url('/nathan-anderson-KvgB81s4dF0-unsplash.jpg');" 
 				+ "-fx-background-size: cover;" ); 
 		
 		layoutTelemetry = new BorderPane(); 
-		layoutTelemetry.setCenter(telemetryBox); 
+		//layoutTelemetry.setCenter(telemetryBox); 
 		layoutTelemetry.setStyle( "-fx-background-image: url('/nathan-anderson-KvgB81s4dF0-unsplash.jpg');" 
 				+ "-fx-background-size: cover;" );
 		
@@ -621,7 +650,6 @@ public class MainApplication extends Application{
 		
 		//Button adjustment 
 		
-		/*
 		surfaceLanderBtn.setGraphic(surfaceLanderView); 
 		surfaceLanderBtn.setContentDisplay(ContentDisplay.TOP); 
 		surfaceLanderBtn.setAlignment(Pos.CENTER); 
@@ -701,7 +729,6 @@ public class MainApplication extends Application{
 		root.setCenter(layoutStart); 
 		primaryStage.setScene(mainScene); 
 		primaryStage.show(); 
-		*/
 		} 
 	
 	//Function to create Navigation Bar for each Scene 
