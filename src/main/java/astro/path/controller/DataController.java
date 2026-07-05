@@ -9,6 +9,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFileChooser;
 
@@ -22,11 +25,14 @@ import astro.path.objects.*;
 
 public class DataController {
 	
+	public Session mySession;
+	public File myStorageFile;
+	
 	public DataController() {
 		
 	}
 	
-	public File getSaveFile() {
+	public void getSaveFile() {
 		File storageFile;
 		JFileChooser fileChooser = new JFileChooser();
 		
@@ -40,19 +46,19 @@ public class DataController {
 		// Default: in case of not chosen
 			storageFile = new File("src/main/resources/ExampleSession.apos.json");
 		}
-		return storageFile;
+		this.myStorageFile = storageFile;
 	}
 		
-	public void createSaveFile(File saveFile) {
+	public void createSaveFile() {
 		try {
-			saveFile.createNewFile();
+			this.myStorageFile.createNewFile();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public Session createSampleData() {
+	public void createSampleData() {
 		Session mySession = new Session();
 		Mission myMission = new Mission();
 		MissionStage myMissionStage = new MissionStage();
@@ -81,19 +87,19 @@ public class DataController {
 		mySession.name = "First Session";
 		mySession.missionList.add(myMission);
 		
-		return mySession;
+		this.mySession = mySession;
 	}
 	
-	public void saveSession(File storageFile, Session mySession) {
+	public void saveSession() {
 		// Output Stream Init
 			ObjectMapper mapper = new ObjectMapper();
 			OutputStream outputStream;
 			try {
-				outputStream = new FileOutputStream(storageFile);
+				outputStream = new FileOutputStream(this.myStorageFile);
 			// Output data into file
 				mapper
 					.writerWithDefaultPrettyPrinter()
-					.writeValue(outputStream, mySession);
+					.writeValue(outputStream, this.mySession);
 				outputStream.close();
 			}  catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -104,10 +110,10 @@ public class DataController {
 			}
 		
 	}
-	public void readFile(File storageFile) {
+	public void readFile() {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			InputStream inputStream = new FileInputStream(storageFile);
+			InputStream inputStream = new FileInputStream(this.myStorageFile);
 			// Creating Mapping Reference for proper input
 			TypeReference<Session> typeReference = new TypeReference<Session>() {};
 			// Creating integratable Dataset 
@@ -131,8 +137,8 @@ public class DataController {
 			
 			// Creating Sample data for test input	
 		
-	public Mission getMission( Session mySession, String missionName) {
-		for (Mission mission : mySession.missionList) {
+	public Mission getMission(String missionName) {
+		for (Mission mission : this.mySession.missionList) {
 			if (mission.name.equals(missionName)) {
 				return mission;
 			}
@@ -140,7 +146,12 @@ public class DataController {
 		return null;
 	}
 	
-	public Spacecraft getSpacecraft(Mission myMission, String SCName) {
+
+	public Spacecraft getSpacecraft(String missionName, String SCName) {
+		Mission myMission = getMission(missionName);
+		if (myMission == null) {
+			return null;
+		}
 		for (Spacecraft SC : myMission.SCList) {
 			if (SC.name.equals(SCName)) {
 				return SC;
@@ -148,18 +159,9 @@ public class DataController {
 		}
 		return null;	
 	}
-	
-	public SCPart getSCPart(Spacecraft mySC, String scpName) {
-		for(SCPart scp : mySC.SCPartList) {
-			if (scp.name.equals(scpName)) {
-				return scp;
-			}
-		}
-		return null;
-	}
-	
-	public SCPart getSCPart(Mission myMission, String scName, String scpName) {
-		Spacecraft mySC = getSpacecraft(myMission, scName);
+
+	public SCPart getSCPart(String missionName, String scName, String scpName) {
+		Spacecraft mySC = getSpacecraft(missionName, scName);
 		if (mySC == null) {
 			return null;
 		}
@@ -171,25 +173,12 @@ public class DataController {
 		return null;
 	}
 	
-	public SCPart getSCPart(Session mySession,
-			String missionName, String scName, String scpName) {
-		Mission myMission = getMission(mySession, missionName);
+	
+	public MissionStage getMissionStage(String missionName, String stageName) {
+		Mission myMission = getMission(missionName);
 		if (myMission == null) {
 			return null;
 		}
-		Spacecraft mySC = getSpacecraft(myMission, scName);
-		if (mySC == null) {
-			return null;
-		}
-		for(SCPart scp : mySC.SCPartList) {
-			if (scp.name.equals(scpName)) {
-				return scp;
-			}
-		}
-		return null;
-	}
-	
-	public MissionStage getMissionStage(Mission myMission, String stageName) {
 		for(MissionStage myStage : myMission.MissionStageList) {
 			if (myStage.name.equals(stageName)) {
 				return myStage;
@@ -197,66 +186,36 @@ public class DataController {
 		}
 		return null;
 	}
-	public MissionStage getMissionStage(Session mySession, String missionName, String stageName) {
-		Mission myMission = getMission(mySession, missionName);
-		if (myMission == null) {
-			return null;
-		} else {
-			for(MissionStage myStage : myMission.MissionStageList) {
-				if (myStage.name.equals(stageName)) {
-					return myStage;
-				}
-			} 
+	
+	public SCPart getActivatedPart(String missionName, String stageName, String ascpName) {
+		MissionStage myMissionStage = getMissionStage(missionName,stageName);
+		if (myMissionStage == null) {
 			return null;
 		}
-	}
-	
-	public SCPart getActivatedSCPart(MissionStage myStage, String ascpName) {
-		for (SCPart ascp : myStage.activatedParts) {
-			if (ascp.name.equals(ascpName)) {
-				return ascp;
+		for (SCPart myASCPart : myMissionStage.activatedParts) {
+			if (myASCPart.name.equals(ascpName)){
+				return myASCPart;
 			}
 		}
 		return null;
 	}
-	
-	public SCPart getActivatedSCPart(Mission myMission,String stageName, String ascpName) {
-		MissionStage myStage = getMissionStage(myMission, stageName);
-		if (myStage == null) {
-			return null;
-		}
-		for (SCPart ascp : myStage.activatedParts) {
-			if (ascp.name.equals(ascpName)) {
-				return ascp;
-			}
-		}
-		return null;
-	}
-	
-	public SCPart getActivatedSCPart(Session mySession, String missionName,String stageName, String ascpName) {
-		Mission myMission = getMission(mySession, missionName);
-		MissionStage myStage = getMissionStage(myMission, stageName);
-		if (myStage == null) {
-			return null;
-		}
-		for (SCPart ascp : myStage.activatedParts) {
-			if (ascp.name.equals(ascpName)) {
-				return ascp;
-			}
-		}
-		return null;
-	}
-	
 	public Session exTimeStep(Session mySession, Time timeStep) {
 		mySession.currentTime.seconds += timeStep.seconds;
 		return mySession;
 	}
 	
-	public Session updateSession(Session mySession) {
+	public void startTimeUpdater(Session mySession) {
+		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+		executor.scheduleAtFixedRate(() -> {
+		    updateSession();
+		}, 0, 1000, TimeUnit.MILLISECONDS);
+	}
+	
+	public void updateSession() {
 		Time timeDiff = new Time();
-		timeDiff.seconds = mySession.currentTime.seconds -
-				mySession.oldTime.seconds;
-		for (Mission myMission : mySession.missionList) {
+		timeDiff.seconds = this.mySession.currentTime.seconds -
+				this.mySession.oldTime.seconds;
+		for (Mission myMission : this.mySession.missionList) {
 			for (Spacecraft mySpacecraft : myMission.SCList) {
 				for (SCPart mySCPart : mySpacecraft.SCPartList) {
 					mySCPart.operate(timeDiff);
@@ -270,6 +229,5 @@ public class DataController {
 				.update(timeDiff);
 			}
 		}
-		return mySession;
 	}
 }
