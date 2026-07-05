@@ -252,7 +252,7 @@ public class DataController {
 		return mySession;
 	}
 	
-	public void updateSession(Session mySession) {
+	public Session updateSession(Session mySession) {
 		Time timeDiff = new Time();
 		timeDiff.seconds = mySession.currentTime.seconds -
 				mySession.oldTime.seconds;
@@ -270,5 +270,6 @@ public class DataController {
 				.update(timeDiff);
 			}
 		}
+		return mySession;
 	}
 }
