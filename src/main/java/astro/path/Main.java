@@ -10,13 +10,14 @@ public class Main {
 
 	public static void main(String[] args) {
 		DataController myDC = new DataController();
+		
 		File myFile = myDC.getSaveFile();
 		myDC.createSaveFile(myFile);
 		Session mySession = myDC.createSampleData();
 		myDC.saveSession(myFile, mySession);
 		myDC.readFile(myFile);
 		
-		Mission myMission = myDC.getMissionWithName(mySession, "Starting Sputni");
+		Mission myMission = myDC.getMission(mySession, "Starting Sputni");
 		if (myMission != null) {
 			System.out.println("Mission name found: " + myMission.name);
 		} else {

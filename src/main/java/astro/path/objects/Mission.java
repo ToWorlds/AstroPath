@@ -10,7 +10,8 @@ public class Mission {
 	public List<Spacecraft> SCList;
 	public List<MissionStage> MissionStageList;
 	public String name;
-/*
+
+	/*
 	public MissionStage currentMissionStage;
 	public String objective;
 	public Time startTimestamp;

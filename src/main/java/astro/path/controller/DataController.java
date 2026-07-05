@@ -47,7 +47,6 @@ public class DataController {
 		try {
 			saveFile.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -114,6 +113,7 @@ public class DataController {
 			Session session = mapper.readValue(inputStream, typeReference);
 			
 			// Basic Object handling
+			
 			System.out.println("Session: '" + session.name +
 				"' has " + session.missionList.size()+ " Mission(s)");
 			for(Mission mission : session.missionList) {
