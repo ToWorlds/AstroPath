@@ -7,9 +7,9 @@ public class DeepSpaceProbe extends Spacecraft {
     private String deepSpaceAntenna;
     private String dataCompressionProtocol;
 
-    public DeepSpaceProbe(String id, String status, TelemetryData telemetryData,
+    public DeepSpaceProbe(String name, String id, String status, TelemetryData telemetryData,
                           String deepSpaceAntenna, String dataCompressionProtocol) {
-        super(id, "Deep Space Probe", status, telemetryData);
+        super(name, id, "Deep Space Probe", status, telemetryData);
         this.deepSpaceAntenna = deepSpaceAntenna;
         this.dataCompressionProtocol = dataCompressionProtocol;
     }

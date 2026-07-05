@@ -12,8 +12,9 @@ public abstract class Spacecraft {
     protected String status;
     protected TelemetryData telemetryData;
 
-    public Spacecraft(String id, String type, String status, TelemetryData telemetryData) {
-        this.id = id;
+    public Spacecraft(String name, String id, String type, String status, TelemetryData telemetryData) {
+        this.name = name;
+    	this.id = id;
         this.type = type;
         this.status = status;
         this.telemetryData = telemetryData;
@@ -35,6 +36,10 @@ public abstract class Spacecraft {
         return id + ": All systems normal.";
     }
 
+    public String getName() {
+    	return name;
+    }
+    
     public String getId() {
         return id;
     }

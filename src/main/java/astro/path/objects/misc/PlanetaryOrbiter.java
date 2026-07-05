@@ -7,10 +7,10 @@ public class PlanetaryOrbiter extends Spacecraft {
     private String orbitParameters;
     private String scientificPayload;
 
-    public PlanetaryOrbiter(String id, String status, TelemetryData telemetryData,
+    public PlanetaryOrbiter(String name, String id, String status, TelemetryData telemetryData,
            String orbitParameters, String scientificPayload) {
     	
-        super(id, "Planetary Orbiter", status, telemetryData);
+        super(name, id, "Planetary Orbiter", status, telemetryData);
         this.orbitParameters = orbitParameters;
         this.scientificPayload = scientificPayload;
     }
